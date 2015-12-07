@@ -15,7 +15,7 @@ class LinksController extends Controller
 
     }
 
-    public function inscription(Request $req){
+  /*  public function inscription(Request $req){
 
         $param=$req->except(['_token']);
 
@@ -28,13 +28,20 @@ class LinksController extends Controller
         return redirect()->route('lol');
 
     }
-
+  */
 
 
     public function test()
     {
 
         return view('auth/login');
+
+    }
+
+    public function home()
+    {
+
+        return view('home');
 
     }
 }

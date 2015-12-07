@@ -34,7 +34,17 @@ Route::post('auth/register', [
 	'as' => 'inscription',
 	'uses' => 'Auth\AuthController@postRegister'
 ]);
+Route::get('/home', [
+	'as' => 'home',
+	'uses' => 'LinksController@home'
 
+]);
+
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+
+//Route de déconnexion
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 //Route::get('home', 'HomeController@index');
 
