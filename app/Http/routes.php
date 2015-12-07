@@ -11,11 +11,34 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/',[
+	'as'=>'index',
+	'uses'=>'LinksController@index'
+]);
 
-Route::get('home', 'HomeController@index');
+/*Route::post('/inscription',[
+	'as'=>'inscription',
+	'uses'=>'LinksController@inscription'
+]);*/
 
-Route::controllers([
+Route::get('/lol',[
+	'as'=>'lol',
+	'uses'=>'LinksController@test'
+]);
+
+Route::get('auth/register', [
+	'as' => 'inscription',
+	'uses' => 'Auth\AuthController@getRegister'
+]);
+Route::post('auth/register', [
+	'as' => 'inscription',
+	'uses' => 'Auth\AuthController@postRegister'
+]);
+
+
+//Route::get('home', 'HomeController@index');
+
+/*Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);
+]);*/
