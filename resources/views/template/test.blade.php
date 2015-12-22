@@ -40,10 +40,6 @@
                     <a href="#">About</a>
                 </li>
 
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-
                 @if(Auth::check())
                     <li>
                         <a href="{{ route('espace_personnel') }}">{{Auth::user()->pseudonyme}}</a>

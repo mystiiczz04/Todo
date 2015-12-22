@@ -5,13 +5,14 @@
     <br><br><br>
     <p>
 
+        <H1>Ajout d'une tâche</H1><br>
 
-        {{$nomliste->nomliste}}
+        <b>Liste de tâche(s) : </b>{{$nomliste->nomliste}}
 
-        <br>
+        <br><br>
     <form method="post" accept-charset="UTF-8" action="{{ route('creation_tâche_soumission') }}">
 
-        <label> Liste de taches : <input type="text" name="nomtache" placeholder="Nom de la tâche"/></label><br>
+        <label> Tâche : <input type="text" name="nomtache" placeholder="Nom de la tâche"/></label><br>
         <label> Date : <input type="text" name="année" />/<input type="text" name="mois" />/<input type="text" name="jour" /></label><br>
 
 

@@ -49,10 +49,34 @@ Route::get('/pages/compte',[
 	'uses'=>'LinksController@espace_personnel'
 ]);
 
-Route::match(['get','post'],'/pages/update/{id}',[
+//mise à jour liste et description
+Route::match(['get','post'],'/pages/update_liste/{id}',[
 	'as'=>'updateliste',
 	'uses'=>'LinksController@updateliste'
 ]);
+
+//mise à jour tache d'une liste
+Route::match(['get','post'],'/pages/update/tache/{id}',[
+	'as'=>'updatetache',
+	'uses'=>'LinksController@updatetache'
+]);
+
+Route::get('/delete/liste/{id}',[
+	'as'=>'deleteliste',
+	'uses'=>'LinksController@deleteliste'
+]);
+
+Route::get('/delete/tache/{id}',[
+	'as'=>'deletetache',
+	'uses'=>'LinksController@deletetache'
+]);
+
+Route::get('/validation/{id}',[
+	'as'=>'validationtache',
+	'uses'=>'LinksController@validationtache'
+]);
+
+
 
 
 //inscription

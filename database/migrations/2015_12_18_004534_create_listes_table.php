@@ -16,9 +16,8 @@ class CreateListesTable extends Migration {
 		{
 			$table->increments('id')->unique();
 			$table->integer('user_id');
-			$table->string('nomliste');
+			$table->string('nomliste')->unique();
 			$table->string('description');
-			$table->boolean('done');
 			$table->timestamps();
 		});
 	}
