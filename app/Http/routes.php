@@ -16,16 +16,46 @@ Route::get('/',[
 	'uses'=>'LinksController@index'
 ]);
 
-/*Route::post('/inscription',[
-	'as'=>'inscription',
-	'uses'=>'LinksController@inscription'
-]);*/
-
-Route::get('/lol',[
-	'as'=>'lol',
-	'uses'=>'LinksController@test'
+//une fois connect�, acc�de � toutes les listes de taches/sous t�ches de l'utilisateur
+Route::get('/pages/home',[
+	'as'=>'home',
+	'uses'=>'LinksController@home'
+]);
+//acces � la creation de taches
+Route::get('/pages/creation_liste',[
+	'as'=>'creation_liste',
+	'uses'=>'LinksController@creation_liste'
 ]);
 
+//formulaire de creation de taches
+Route::post('/pages/creation_liste',[
+	'as'=>'creation_liste',
+	'uses'=>'LinksController@creation_liste_soumission'
+]);
+
+Route::get('/pages/creation_tâche/{id}',[
+	'as'=>'creation_tâche',
+	'uses'=>'LinksController@creation_tâche'
+]);
+
+Route::post('/pages/creation_tâche',[
+	'as'=>'creation_tâche_soumission',
+	'uses'=>'LinksController@creation_tâche_soumission'
+]);
+
+//acces � l'espace personnel de l'utilisateur
+Route::get('/pages/compte',[
+	'as'=>'espace_personnel',
+	'uses'=>'LinksController@espace_personnel'
+]);
+
+Route::match(['get','post'],'/pages/update/{id}',[
+	'as'=>'updateliste',
+	'uses'=>'LinksController@updateliste'
+]);
+
+
+//inscription
 Route::get('auth/register', [
 	'as' => 'inscription',
 	'uses' => 'Auth\AuthController@getRegister'
@@ -34,21 +64,23 @@ Route::post('auth/register', [
 	'as' => 'inscription',
 	'uses' => 'Auth\AuthController@postRegister'
 ]);
-Route::get('/home', [
-	'as' => 'home',
-	'uses' => 'LinksController@home'
 
+//login
+Route::get('auth/login', [
+	'as'=>'login',
+	'uses'=>'Auth\AuthController@getLogin'
 ]);
 
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::post('auth/login', [
+	'as'=>'login',
+	'uses'=>'Auth\AuthController@postLogin'
+]);
 
-//Route de d�connexion
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+//Route de d�connexion
+Route::get('auth/logout', [
+	'as'=>'logout',
+	'uses'=>'Auth\AuthController@getLogout'
+]);
 
-//Route::get('home', 'HomeController@index');
 
-/*Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);*/
+

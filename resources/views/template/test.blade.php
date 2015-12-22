@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+
+    <title>ToDo Tracker</title>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
@@ -30,7 +31,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="{{ url('/pages/home') }}">Todo Tracker</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -38,19 +39,20 @@
                 <li>
                     <a href="#">About</a>
                 </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
+
                 <li>
                     <a href="#">Contact</a>
                 </li>
 
                 @if(Auth::check())
                     <li>
-                        <a href="/pages/compte">{{Auth::user()->pseudonyme}}</a>
+                        <a href="{{ route('espace_personnel') }}">{{Auth::user()->pseudonyme}}</a>
                     </li>
                 @else
                 @endif
+                <li>
+                    <a href="{{ route('logout') }}">Deconnexion</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
