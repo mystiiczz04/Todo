@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use App\Tache;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\Liste;
+use DateTime;
 
 
 //use Illuminate\Support\Facades\Request;
@@ -16,14 +19,53 @@ class LinksController extends Controller
 
     public function index()
     {
-        return view('auth/register');
+        if(Auth::check())
+        {
+            return redirect('home');
+        }
+        else
+        {
+            return view ('pages/index');
+        }
+
 
     }
 
+
+    public function about()
+    {
+            return view('/pages/about');
+    }
+
     //accede a la page de creation de listes de taches
+
+
+    public function creation_liste_errors()
+    {
+        if(Auth::check())
+        {
+            return view('/errors/nouvelle_liste_errors');
+        }
+        else
+        {
+            return redirect()->route('index');
+        }
+
+    }
+
     public function creation_liste()
     {
-      return view('/pages/nouvelle_liste');
+
+        if(Auth::check())
+        {
+            return view('/pages/nouvelle_liste');
+        }
+
+        else
+        {
+            return redirect()->route('index');
+        }
+
     }
 
     //gestion du formulaire de creation de listes de taches
@@ -39,18 +81,16 @@ class LinksController extends Controller
         if (count($doublon) == 0)
         {
             $liste = new \App\Liste;
-            $liste->user_id=$param['user'];
-            $liste->nomliste=$param['nomliste'];
-            $liste->description=$param['description'];
+            $liste->user_id=htmlentities($param['user']);
+            $liste->nomliste=htmlentities($param['nomliste']);
+            $liste->description=htmlentities($param['description']);
             $liste->save();
             return redirect()->route('home');
         }
 
         else
         {
-            //$erreur = "Cette liste existe déjà, veuillez l'editer ou choisir un autre nom de liste.";
-            return redirect()->route('creation_liste')->with('erreur', 'pas possible');
-
+            return redirect()->route('creation_liste_errors');
         }
 
 
@@ -60,73 +100,103 @@ class LinksController extends Controller
     //accede a la page de creation de listes de taches
     public function creation_tâche($id)
     {
-        $liste_tâche = Liste::find($id);
+        if(Auth::check())
+        {
+            $liste_tâche = Liste::find($id);
 
-        return view('/pages/nouvelle_tache') ->with('nomliste', $liste_tâche);
+            return view('/pages/nouvelle_tache') ->with('nomliste', $liste_tâche);
+        }
+        else
+        {
+            return redirect()->route('index');
+        }
+
     }
 
     public function creation_tâche_soumission(Request $req)
     {
-        $param=$req->except(['_token']);
 
-        $tache = new \App\Tache;
-        $tache->liste=$param['nomliste'];
-        $tache->tache=$param['nomtache'];
+            $param=$req->except(['_token']);
+            $tache = new \App\Tache;
+            $tache->liste=htmlentities($param['nomliste']);
+            $tache->tache=htmlentities($param['nomtache']);
+            $tache->date=htmlentities($param['date']);
+            $tache->done=htmlentities($param['done']);
+            $tache->save();
+            return redirect()->route('home');
 
-        $tache->done=$param['done'];
-        $tache->save();
-        return redirect()->route('home');
+        //var_dump($tache);
+        //echo $tache->date;
 
     }
 
-    //mise à jour de la liste et de sa description
+    //mise à jour de la liste et de sa description0
     public function updateliste(Request $req, $id)
     {
-        //recupère l'id en cours de la liste et de la on la manipule
-        //idem pour la fonction du dessous
-        $liste=Liste::find($id);
-
-        $tache_liste = $liste->nomliste;
-
-
-        if($req->isMethod('post'))
+        if(Auth::check())
         {
-            $param=$req->except(['_token']);
-            //reattribution des valeurs de nomliste et description de la table "listes"
-            $liste->nomliste=$param['liste'];
-            $liste->description=$param['description'];
+            //recupère l'id en cours de la liste et de la on la manipule
+            //idem pour la fonction du dessous
+            $liste=Liste::find($id);
 
-            DB::table('taches')
-                ->where('liste' , $tache_liste)
-                ->update(['liste' => $liste->nomliste]);
-            $liste->save();
-            return redirect()->route('home');
+            $tache_liste = $liste->nomliste;
 
+
+            if($req->isMethod('post'))
+            {
+                $param=$req->except(['_token']);
+                //reattribution des valeurs de nomliste et description de la table "listes"
+                $liste->nomliste=htmlentities($param['liste']);
+                $liste->description=htmlentities($param['description']);
+
+                DB::table('taches')
+                    ->where('liste' , $tache_liste)
+                    ->update(['liste' => $liste->nomliste]);
+                $liste->save();
+                return redirect()->route('home');
+
+            }
+
+            return view('pages/update_liste')->with('liste' , $liste);
         }
 
-        return view('pages/update_liste')->with('liste' , $liste);
+        else
+        {
+            return redirect()->route('index');
+        }
+
+
 
     }
     //cf explication au dessus
     public function updatetache(Request $req, $id)
     {
-
-        $tache=Tache::find($id);
-
-
-        if($req->isMethod('post'))
+        if(Auth::check())
         {
-            $param=$req->except(['_token']);
+            $tache=Tache::find($id);
 
-            $tache->tache=$param['tache'];
-            $tache->save();
-            return redirect()->route('home');
-            //var_dump($liste);
-            //echo $liste->id;
 
+            if($req->isMethod('post'))
+            {
+                $param=$req->except(['_token']);
+
+                $tache->tache=htmlentities($param['tache']);
+                $tache->date=htmlentities($param['date']);
+                $tache->save();
+                return redirect()->route('home');
+                //var_dump($liste);
+                //echo $liste->id;
+
+            }
+
+            return view('pages/update_tache')->with('tache' , $tache);
         }
 
-        return view('pages/update_tache')->with('tache' , $tache);
+        else
+        {
+            return redirect()->route('index');
+        }
+
 
     }
 
@@ -164,68 +234,82 @@ class LinksController extends Controller
     public function home()
     {
 
-        $liste_home = DB::table('listes')
-            ->join('taches' , 'taches.liste' ,'=' , 'listes.nomliste')
+        if(Auth::check())
+        {
+            $liste_home = DB::table('listes')
+                ->join('taches' , 'taches.liste' ,'=' , 'listes.nomliste')
 
-            ->select(
-                'listes.user_id as id',
-                'listes.nomliste as nomliste',
-                'taches.tache as tache',
-                'taches.liste as liste',
-                'taches.id as tache_id',
-                'taches.done as t_done'
+                ->select(
+                    'listes.user_id as id',
+                    'listes.nomliste as nomliste',
+                    'taches.tache as tache',
+                    'taches.liste as liste',
+                    'taches.id as tache_id',
+                    'taches.done as t_done',
+                    'taches.date as date'
                 )
 
-            //verifier le select
+                //verifier le select
 
-            ->where('listes.user_id' ,'=', Auth::user()->id)
-            ->where('taches.done' ,'=', 0)
-            ->get();
+                ->where('listes.user_id' ,'=', Auth::user()->id)
+                ->where('taches.done' ,'=', 0)
+                ->where('date', '>=', new DateTime('today'))
+                ->get();
 
-        $liste_unique = DB::table('listes')
-            ->select('user_id', 'nomliste', 'id')
-            ->groupBy('nomliste')
-            ->where('user_id' ,'=', Auth::user()->id)
-            ->get();
+            $liste_unique = DB::table('listes')
+                ->select('user_id', 'nomliste', 'id')
+                ->groupBy('nomliste')
+                ->where('user_id' ,'=', Auth::user()->id)
+                ->get();
 
 
-        return view('pages/home', array(
-            'liste_unique' => $liste_unique,
-            'selection' => $liste_home
+            return view('pages/home', array(
+                'liste_unique' => $liste_unique,
+                'selection' => $liste_home
             ));
             //->with('selection', $liste_home);
-           // ->with('unique', $liste_unique);
+            // ->with('unique', $liste_unique);
+        }
+
+        else
+        {
+            return redirect()->route('index');
+        }
+
     }
 
     public function espace_personnel()
     {
+        if(Auth::check())
+        {
+            $taches = DB::table('listes')
+                ->join('taches' , 'taches.liste' ,'=' , 'listes.nomliste')
 
-        $taches = DB::table('listes')
-            ->join('taches' , 'taches.liste' ,'=' , 'listes.nomliste')
+                ->select('listes.user_id as id',
+                    'taches.done as t_done',
+                    'taches.liste as liste',
+                    'taches.tache as tache',
+                    'taches.date as date'
+                )
+                ->where('listes.user_id' ,'=', Auth::user()->id)
+                ->where('date', '>=', new DateTime('today'))
+                ->get();
 
-            ->select('listes.user_id as id',
-                'taches.done as t_done',
-                'taches.liste as liste',
-                'taches.tache as tache'
-            )
-            ->where('listes.user_id' ,'=', Auth::user()->id)
-            ->get();
+            $liste = DB::table('listes')
+                ->select('id','nomliste','description', 'created_at')
+                ->where('user_id', '=' , Auth::user()->id )
+                ->get();
 
-        $liste = DB::table('listes')
-            ->select('id','nomliste','description', 'created_at')
-            ->where('user_id', '=' , Auth::user()->id )
-            ->get();
+            return view('pages/espace_personnel', array(
+                'selection' => $liste,
+                'taches' => $taches
+            ));
+        }
 
-
-        //$split = explode(' ', $liste->created_at);
-
-        return view('pages/espace_personnel', array(
-            'selection' => $liste,
-            'taches' => $taches
-        ));
-
-
-
+        else
+        {
+            return redirect()->route('index');
+        }
 
     }
 

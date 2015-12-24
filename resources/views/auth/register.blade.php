@@ -1,5 +1,5 @@
 @extends('template.template')
-
+<br><br><br><br><br>
 @section('content')
 <div class="container-fluid">
 	<div class="row">

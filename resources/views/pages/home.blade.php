@@ -1,4 +1,4 @@
-@extends('template.test')
+@extends('template.template')
 
 @section('content')
 	<br>
@@ -20,10 +20,11 @@
 			@if($tache_home->liste == $liste_home->nomliste)
 
 				{{$tache_home->tache}}
+
 				<a href="{{ route('updatetache',['id'=>$tache_home->tache_id]) }}"><img src={{asset('images/carre-gris.jpg')}} alt="Editer"></a>
 				<a href="{{ route('validationtache',['id'=>$tache_home->tache_id]) }}"><img src={{asset('images/carre-vert.jpg')}} alt="Valider"></a>
 				<a href="{{ route('deletetache',['id'=>$tache_home->tache_id]) }}"><img src={{asset('images/carre-rouge.jpg')}} alt="Effacer"></a>
-
+				{{$tache_home->date}}
 				<br>
 
 

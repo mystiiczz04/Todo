@@ -16,11 +16,23 @@ Route::get('/',[
 	'uses'=>'LinksController@index'
 ]);
 
+Route::get('/pages/about', [
+	'as' => 'about',
+	'uses' => 'LinksController@about'
+]);
+
 //une fois connect�, acc�de � toutes les listes de taches/sous t�ches de l'utilisateur
 Route::get('/pages/home',[
 	'as'=>'home',
 	'uses'=>'LinksController@home'
 ]);
+
+//acces � la creation de taches
+Route::get('/errors/nouvelle_liste_errors',[
+	'as'=>'creation_liste_errors',
+	'uses'=>'LinksController@creation_liste_errors'
+]);
+
 //acces � la creation de taches
 Route::get('/pages/creation_liste',[
 	'as'=>'creation_liste',
