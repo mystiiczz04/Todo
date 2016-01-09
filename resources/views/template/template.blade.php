@@ -8,7 +8,7 @@
     <title>ToDo Tracker</title>
 
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet" type="text/css">
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
@@ -35,7 +35,7 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{{ route('about') }}">About</a>
                 </li>

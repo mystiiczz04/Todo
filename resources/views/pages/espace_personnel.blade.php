@@ -2,22 +2,18 @@
 
 @section('content')
 
-    <br><br><br>
+        <H1 id="titre_espace">Espace personnel</H1>
 
-    <p>
-        <H1>Espace personnel</H1><br>
-    </p>
-
-    <p>
             @foreach($selection as $liste)
+            <div id="liste_espace">
             <b>Nom de la liste :</b> {{$liste->nomliste}}
-            <a href="{{ route('updateliste',['id'=>$liste->id]) }}"><img src={{asset('images/carre-gris.jpg')}} alt="Editer"></a>
+            <a href="{{ route('updateliste',['id'=>$liste->id]) }}"><button class="btn btn-group-lg">Editer</button></a>
             <br>
             <b>Description :</b> {{$liste->description}}<br>
             <b>Création : </b> {{$liste->created_at}}<br>
-            <br><br>
+            </div>
 
-
+            <div id="cours_espace">
             <b>Tâche(s) en cours :</b><br>
 
                 @foreach($taches as $tache_home)
@@ -29,8 +25,9 @@
                     @endif
 
                 @endforeach
-
-            <br><b>Tâche(s) terminée(s) :</b><br>
+            </div>
+            <div id="done_espace">
+            <b>Tâche(s) terminée(s) :</b><br>
 
             @foreach($taches as $tache_home)
 
@@ -41,15 +38,12 @@
                 @endif
 
             @endforeach
+            </div>
 
-            <br>
             @endforeach
 
 
-    </p>
-
-
-    <form action="{{ route('creation_liste') }}">
+    <form id="bouton_espace" action="{{ route('creation_liste') }}">
         <input type="submit" value="Nouvelle Liste">
     </form>
 @endsection

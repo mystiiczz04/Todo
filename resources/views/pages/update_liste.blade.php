@@ -1,10 +1,9 @@
 @extends('template.template')
 
 @section('content')
-    <br><br><br>
 
-
-    <H1>Edition de liste</H1><br>
+    <div class="main_nouvelle_liste">
+    <H1 class="titre_nouvelle_liste">Edition de liste</H1><br>
 
 
     <form method="post" accept-charset="UTF-8" action="{{ route('updateliste',['id'=>$liste->id]) }}">
@@ -16,5 +15,6 @@
         <input type="submit" value="Modifier">
 
     </form>
+    </div>
 
 @endsection

@@ -1,16 +1,21 @@
 @extends('template.template')
 
 @section('content')
-
-    <br><br><br><br>
-    <H1>A propos</H1><br>
+<div id="principal_about">
+    <H1 >A propos</H1>
+    <div id="binome_about">
     <b>Binôme :</b><br>
     Daubie Dylan<br>
-    Poupon Martin<br><br>
+    Poupon Martin
+    </div>
+    <div id="cours_about">
+        <b>Intitulé du cours :</b><br>
+        TR3TIN
+    </div>
 
-    <b>Intitulé du cours :</b><br>
-    TR3TIN <br><br>
+    <div id="bouton_about">
 
-    <b>Dépôt GIT du projet</b><br>
-    <a href="https://github.com/mystiiczz04/Todo" target="_blank">https://github.com/mystiiczz04/Todo</a><br>
-    <a href="https://github.com/JonusAngelus" target="_blank">https://github.com/JonusAngelus</a><br>
+        <a href="https://github.com/mystiiczz04/Todo" target="_blank"><button>Dépôt GIT du projet</button></a>
+
+    </div>
+</div>

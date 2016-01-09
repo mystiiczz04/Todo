@@ -1,0 +1,192 @@
+body {
+    margin: 0;
+}
+/*debut home*/
+#titre_home
+{
+    text-align: center;
+    margin-top: 80px;
+}
+
+#conteneur_liste_home
+{
+    margin-left: 100px;
+    margin-top: 30px;
+    width: 600px;
+    height: auto;
+    font-size: 25px;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+#liste_home
+{
+    font-size: 25px;
+    float: left;
+    margin-right: 15px;
+}
+
+#conteneur_tache_home
+{
+    margin-left: 150px;
+    margin-top: 30px;
+    width: 550px;
+    height: auto;
+    font-size: 25px;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+#tache_home
+{
+    float: left;
+    margin-right: 15px;
+
+}
+
+#boutons
+{
+    margin-left: 15px;
+}
+
+#echeance
+{
+    margin-top: 20px;
+
+}
+
+/*fin de la mise en page de home*/
+
+/*debut about*/
+#principal_about
+{
+    margin-top: 80px;
+    margin-left: 80px;
+}
+
+
+#binome_about
+{
+    margin-top: 30px;
+    margin-left: 40px;
+    font-size: 18px;
+}
+
+#cours_about
+{
+    margin-top: 20px;
+    margin-left: 40px;
+    font-size: 18px;
+}
+
+#bouton_about
+{
+    margin-top: 20px;
+}
+
+/*fin de la mise en page de about*/
+
+/*Debut mise en page d'espace personnel*/
+
+#titre_espace
+{
+    margin-top: 80px;
+    margin-left: 80px;
+}
+
+#liste_espace
+{
+    margin-left: 100px;
+    margin-top: 30px;
+    width: 600px;
+    height: auto;
+    font-size: 22px;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+#cours_espace
+{
+    margin-left: 130px;
+    margin-top: 30px;
+    width: 570px;
+    height: auto;
+    font-size: 18px;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+#done_espace
+{
+    margin-left: 130px;
+    margin-top: 30px;
+    width: 570px;
+    height: auto;
+    font-size: 18px;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+#bouton_espace
+{
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+
+/*fin mise en page espace personnel*/
+/*debut mise en place nouvelle_liste*/
+
+.main_nouvelle_liste
+{
+    margin-top: 80px;
+    margin-left: 80px;
+    font-size: 18px;
+}
+
+.titre_nouvelle_liste
+{
+    margin-bottom: 30px;
+}
+
+/*fin mise en place nouvelle liste*/
+
+/*debut mise en place nouvelle tache*/
+
+.main_nouvelle_tache
+{
+    margin-top: 80px;
+    margin-left: 80px;
+    font-size: 18px;
+}
+
+.titre_nouvelle_tache
+{
+    margin-bottom: 30px;
+}
+/*fin mise en place nouvelle tache*/
+
+/*mise en page index*/
+
+#main_index
+{
+    text-align: center;
+    margin-top: 80px;
+}
+
+#text_index
+{
+    font-size: 19px;
+    margin-top: 50px;
+}
+
+#boutons_index
+{
+    margin-top: 80px;
+}
+/*fin de la mise en page index*/

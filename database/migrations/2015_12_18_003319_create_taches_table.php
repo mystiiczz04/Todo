@@ -16,6 +16,7 @@ class CreateTachesTable extends Migration {
 		{
 			$table->increments('id')->unique();
 			$table->string('liste');
+			$table->integer('user_id');
 			$table->string('tache');
 			$table->boolean('done');
 			$table->date('date');

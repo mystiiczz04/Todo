@@ -16,7 +16,7 @@ class CreateListesTable extends Migration {
 		{
 			$table->increments('id')->unique();
 			$table->integer('user_id');
-			$table->string('nomliste')->unique();
+			$table->string('nomliste');
 			$table->string('description');
 			$table->timestamps();
 		});
@@ -29,7 +29,7 @@ class CreateListesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('taches');
+		Schema::drop('listes');
 	}
 
 }

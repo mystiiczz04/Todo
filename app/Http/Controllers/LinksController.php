@@ -21,7 +21,7 @@ class LinksController extends Controller
     {
         if(Auth::check())
         {
-            return redirect('home');
+            return redirect()->route('home');
         }
         else
         {
@@ -74,8 +74,9 @@ class LinksController extends Controller
         $param=$req->except(['_token']);
 
         $doublon = DB::table('listes')
-            ->select('nomliste')
+            ->select('nomliste', 'user_id')
             ->where('nomliste' ,'=', $param['nomliste'])
+            ->where('user_id', '=', Auth::user()->id)
             ->get();
 
         if (count($doublon) == 0)
@@ -121,6 +122,7 @@ class LinksController extends Controller
             $tache->liste=htmlentities($param['nomliste']);
             $tache->tache=htmlentities($param['nomtache']);
             $tache->date=htmlentities($param['date']);
+            $tache->user_id=htmlentities($param['user_id']);
             $tache->done=htmlentities($param['done']);
             $tache->save();
             return redirect()->route('home');
@@ -138,9 +140,7 @@ class LinksController extends Controller
             //recupère l'id en cours de la liste et de la on la manipule
             //idem pour la fonction du dessous
             $liste=Liste::find($id);
-
             $tache_liste = $liste->nomliste;
-
 
             if($req->isMethod('post'))
             {
@@ -154,9 +154,7 @@ class LinksController extends Controller
                     ->update(['liste' => $liste->nomliste]);
                 $liste->save();
                 return redirect()->route('home');
-
             }
-
             return view('pages/update_liste')->with('liste' , $liste);
         }
 
@@ -205,7 +203,10 @@ class LinksController extends Controller
         $liste=Liste::find($id);
         $liste->delete();
 
-        DB::table('taches')->where('liste', '=', $liste->nomliste)->delete();
+        DB::table('taches')
+            ->where('liste', '=', $liste->nomliste)
+            ->where('user_id', '=' , Auth::user()->id)
+            ->delete();
 
         return redirect()->route('home');
     }
@@ -246,29 +247,28 @@ class LinksController extends Controller
                     'taches.liste as liste',
                     'taches.id as tache_id',
                     'taches.done as t_done',
-                    'taches.date as date'
+                    'taches.date as date',
+                    'taches.user_id'
                 )
-
-                //verifier le select
 
                 ->where('listes.user_id' ,'=', Auth::user()->id)
                 ->where('taches.done' ,'=', 0)
                 ->where('date', '>=', new DateTime('today'))
+                ->where('taches.user_id', '=' , Auth::user()->id)
+                ->orderBy('taches.date', 'ASC')
                 ->get();
 
             $liste_unique = DB::table('listes')
-                ->select('user_id', 'nomliste', 'id')
+                ->select('user_id', 'nomliste', 'id', 'created_at')
                 ->groupBy('nomliste')
                 ->where('user_id' ,'=', Auth::user()->id)
+                ->orderBy('created_at', 'ASC')
                 ->get();
-
 
             return view('pages/home', array(
                 'liste_unique' => $liste_unique,
                 'selection' => $liste_home
             ));
-            //->with('selection', $liste_home);
-            // ->with('unique', $liste_unique);
         }
 
         else
@@ -280,6 +280,7 @@ class LinksController extends Controller
 
     public function espace_personnel()
     {
+        //2 requetes sql necessaires, comme pour home, il faut afficher les listes de manière unique et afficher les taches en cours.
         if(Auth::check())
         {
             $taches = DB::table('listes')
@@ -289,15 +290,19 @@ class LinksController extends Controller
                     'taches.done as t_done',
                     'taches.liste as liste',
                     'taches.tache as tache',
-                    'taches.date as date'
+                    'taches.date as date',
+                    'taches.user_id'
                 )
                 ->where('listes.user_id' ,'=', Auth::user()->id)
+                ->where('taches.user_id', '=', Auth::user()->id)
                 ->where('date', '>=', new DateTime('today'))
+                ->orderBy('taches.date', 'ASC')
                 ->get();
 
             $liste = DB::table('listes')
                 ->select('id','nomliste','description', 'created_at')
                 ->where('user_id', '=' , Auth::user()->id )
+                ->orderBy('created_at', 'ASC')
                 ->get();
 
             return view('pages/espace_personnel', array(
